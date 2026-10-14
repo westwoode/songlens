@@ -6,5 +6,9 @@ class Section:
         else:
             self.lyrics = lyrics
 
+    def add_line(self, line):
+        self.lyrics.append(line)
+
     def __str__(self):
-        return f"Section: {self.title}\n{self.lyrics}"
+        lines = "\n".join(str(line) for line in self.lyrics)
+        return f"Section: {self.title}\n{lines}"
