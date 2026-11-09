@@ -13,3 +13,13 @@ class LyricLine:
     
     def __str__(self):
         return f"{self.line_number}. {self.text}"
+
+    def to_dict(self):
+        return {
+            "text": self.text,
+            "line_number": self.line_number,
+            "interpretations": [
+                interpretation.to_dict()
+                for interpretation in self.interpretations
+            ]
+        }

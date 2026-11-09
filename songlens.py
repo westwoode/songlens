@@ -2,6 +2,7 @@ from song import Song
 from section import Section
 from lyric_line import LyricLine
 from interpretation import Interpretation
+import json
 
 def main():
     song1 = Song("Song Title", "Artist Name", "Album Name", 2023)
@@ -42,6 +43,9 @@ def main():
 
     for interpretation in line1.interpretations:
         print("-", interpretation)
+
+    print("\nSong as JSON:")
+    print(json.dumps(song1.to_dict(), indent=4))
 
 if __name__ == "__main__":
     main()

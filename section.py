@@ -12,3 +12,12 @@ class Section:
     def __str__(self):
         lines = "\n".join(str(line) for line in self.lyrics)
         return f"Section: {self.title}\n{lines}"
+
+    def to_dict(self):
+        return {
+            "title": self.title,
+            "lyrics": [
+                line.to_dict()
+                for line in self.lyrics
+            ]
+        }

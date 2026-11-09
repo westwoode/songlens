@@ -14,3 +14,15 @@ class Song:
 
     def __str__(self):
         return f"{self.title} by {self.artist} from the album {self.album} ({self.year})"
+
+    def to_dict(self):
+        return {
+            "title": self.title,
+            "artist": self.artist,
+            "album": self.album,
+            "year": self.year,
+            "sections": [
+                section.to_dict()
+                for section in self.sections
+            ]
+        }
