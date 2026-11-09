@@ -1,15 +1,39 @@
+from section import Section
+
 class Song:
     def __init__(self, title, artist, album, year, sections = None):
+        if not isinstance(title, str) or not title.strip():
+            raise ValueError("Song title must be a non-empty string.")
+
+        if not isinstance(artist, str) or not artist.strip():
+            raise ValueError("Artist name must be a non-empty string.")
+
+        if not isinstance(album, str) or not album.strip():
+            raise ValueError("Album name must be a non-empty string.")
+
+        if type(year) is not int or year < 1000 or year > 9999:
+            raise ValueError("Year must be a four-digit integer.")
+
         self.title = title
         self.artist = artist
         self.album = album
         self.year = year
+
         if sections is None:
-            self.sections = []
-        else:
-            self.sections = sections
+            sections = []
+
+        if not isinstance(sections, list):
+            raise TypeError("Sections must be a list.")
+
+        if not all(isinstance(section, Section) for section in sections):
+            raise TypeError("All sections must be Section objects.")
+
+        self.sections = sections
 
     def add_section(self, section):
+        if not isinstance(section, Section):
+            raise TypeError("Only Section objects can be added.")
+
         self.sections.append(section)
 
     def __str__(self):

@@ -105,6 +105,77 @@ class TestSongLens(unittest.TestCase):
             Interpretation
         )
 
+    def test_empty_lyric_rejected(self):
+        with self.assertRaises(ValueError):
+            LyricLine("   ", 1)
+
+    def test_invalid_line_number_rejected(self):
+        with self.assertRaises(ValueError):
+            LyricLine("Valid lyric", -3)
+
+        with self.assertRaises(ValueError):
+            LyricLine("Valid lyric", True)
+
+    def test_empty_song_title_rejected(self):
+        with self.assertRaises(ValueError):
+            Song("", "Artist", "Album", 2026)
+
+    def test_empty_artist_rejected(self):
+        with self.assertRaises(ValueError):
+            Song("Title", "   ", "Album", 2026)
+
+    def test_invalid_song_year_rejected(self):
+        with self.assertRaises(ValueError):
+            Song("Title", "Artist", "Album", "2026")
+
+        with self.assertRaises(ValueError):
+            Song("Title", "Artist", "Album", True)
+
+    def test_empty_section_title_rejected(self):
+        with self.assertRaises(ValueError):
+            Section("   ")
+
+    def test_invalid_lyric_rejected(self):
+        verse = Section("Verse 1")
+
+        with self.assertRaises(TypeError):
+            verse.add_line("This is just a string")
+
+    def test_invalid_initial_lyrics_rejected(self):
+        with self.assertRaises(TypeError):
+            Section("Verse 1", ["Line 1", "Line 2"])
+
+    def test_empty_interpretation_category_rejected(self):
+        with self.assertRaises(ValueError):
+            Interpretation("", "A valid explanation.")
+
+    def test_empty_interpretation_explanation_rejected(self):
+        with self.assertRaises(ValueError):
+            Interpretation("Symbolism", "   ")
+
+    def test_invalid_interpretation_source_rejected(self):
+        with self.assertRaises(TypeError):
+            Interpretation("Symbolism", "Represents hope.", 123)
+
+    def test_invalid_section_rejected(self):
+        song = Song("Title", "Artist", "Album", 2026)
+
+        with self.assertRaises(TypeError):
+            song.add_section("Verse 1")
+
+    def test_invalid_initial_sections_rejected(self):
+        with self.assertRaises(TypeError):
+            Song("Title", "Artist", "Album", 2026, ["Verse 1"])
+
+    def test_invalid_interpretation_rejected(self):
+        lyric = LyricLine("First lyric", 1)
+
+        with self.assertRaises(TypeError):
+            lyric.add_interpretation("Some interpretation")
+
+    def test_invalid_initial_interpretations_rejected(self):
+        with self.assertRaises(TypeError):
+            LyricLine("First lyric", 1, ["Some interpretation"])
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,14 @@
 class Interpretation:
     def __init__(self, category, explanation, source=None):
+        if not isinstance(category, str) or not category.strip():
+            raise ValueError("Category must be a non-empty string.")
+
+        if not isinstance(explanation, str) or not explanation.strip():
+            raise ValueError("Explanation must be a non-empty string.")
+
+        if source is not None and not isinstance(source, str):
+            raise TypeError("Source must be a string or None.")
+
         self.category = category
         self.explanation = explanation
         self.source = source
