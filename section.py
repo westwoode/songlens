@@ -21,3 +21,14 @@ class Section:
                 for line in self.lyrics
             ]
         }
+
+    @classmethod
+    def from_dict(cls, data):
+        from lyric_line import LyricLine
+
+        lyrics = [
+            LyricLine.from_dict(item)
+            for item in data["lyrics"]
+        ]
+
+        return cls(data["title"], lyrics)

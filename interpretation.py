@@ -13,3 +13,11 @@ class Interpretation:
             "explanation": self.explanation,
             "source": self.source
         }
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            data["category"],
+            data["explanation"],
+            data.get("source")
+        )

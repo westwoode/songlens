@@ -26,3 +26,20 @@ class Song:
                 for section in self.sections
             ]
         }
+
+    @classmethod
+    def from_dict(cls, data):
+        from section import Section
+
+        sections = [
+            Section.from_dict(item)
+            for item in data["sections"]
+        ]
+
+        return cls(
+            data["title"],
+            data["artist"],
+            data["album"],
+            data["year"],
+            sections
+        )

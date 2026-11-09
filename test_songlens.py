@@ -4,6 +4,9 @@ from song import Song
 from section import Section
 from lyric_line import LyricLine
 from interpretation import Interpretation
+import os
+import tempfile
+from storage import save_song, load_song
 
 
 class TestSongLens(unittest.TestCase):
@@ -69,6 +72,38 @@ class TestSongLens(unittest.TestCase):
 
         self.assertEqual(len(verse1.lyrics), 1)
         self.assertEqual(len(verse2.lyrics), 0)
+
+    def test_save_and_load_song(self):
+        song = Song("Test Song", "Test Artist", "Test Album", 2026)
+
+        verse = Section("Verse 1")
+        lyric = LyricLine("I am lost in the stars", 1)
+
+        lyric.add_interpretation(
+            Interpretation("Symbolism", "Stars represent hope.")
+        )
+
+        verse.add_line(lyric)
+        song.add_section(verse)
+
+        with tempfile.TemporaryDirectory() as directory:
+            filename = os.path.join(directory, "test_song.json")
+
+            save_song(song, filename)
+            loaded_song = load_song(filename)
+
+        self.assertEqual(song.to_dict(), loaded_song.to_dict())
+
+        self.assertIsInstance(loaded_song, Song)
+        self.assertIsInstance(loaded_song.sections[0], Section)
+        self.assertIsInstance(
+            loaded_song.sections[0].lyrics[0],
+            LyricLine
+        )
+        self.assertIsInstance(
+            loaded_song.sections[0].lyrics[0].interpretations[0],
+            Interpretation
+        )
 
 
 if __name__ == "__main__":

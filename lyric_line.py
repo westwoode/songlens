@@ -23,3 +23,18 @@ class LyricLine:
                 for interpretation in self.interpretations
             ]
         }
+
+    @classmethod
+    def from_dict(cls, data):
+        from interpretation import Interpretation
+
+        interpretations = [
+            Interpretation.from_dict(item)
+            for item in data["interpretations"]
+        ]
+
+        return cls(
+            data["text"],
+            data["line_number"],
+            interpretations
+        )
