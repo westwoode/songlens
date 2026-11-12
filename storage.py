@@ -10,9 +10,15 @@ def load_song(filename):
     try:
         with open(filename, "r", encoding="utf-8") as file:
             data = json.load(file)
+
     except FileNotFoundError as error:
         raise FileNotFoundError(
             f"Song file not found: {filename}"
+        ) from error
+
+    except json.JSONDecodeError as error:
+        raise ValueError(
+            f"Invalid JSON format in song file: {filename}"
         ) from error
 
     return Song.from_dict(data)

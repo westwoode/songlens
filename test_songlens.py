@@ -187,5 +187,18 @@ class TestSongLens(unittest.TestCase):
             ):
                 load_song(filename)
 
+    def test_load_corrupted_json(self):
+        with tempfile.TemporaryDirectory() as directory:
+            filename = os.path.join(directory, "corrupted.json")
+
+            with open(filename, "w", encoding="utf-8") as file:
+                file.write('{"title": "Broken Song",}')
+
+            with self.assertRaisesRegex(
+                ValueError,
+                "Invalid JSON format"
+            ):
+                load_song(filename)
+
 if __name__ == "__main__":
     unittest.main()
