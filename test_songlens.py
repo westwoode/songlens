@@ -177,5 +177,15 @@ class TestSongLens(unittest.TestCase):
         with self.assertRaises(TypeError):
             LyricLine("First lyric", 1, ["Some interpretation"])
 
+    def test_load_missing_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            filename = os.path.join(directory, "missing_song.json")
+
+            with self.assertRaisesRegex(
+                FileNotFoundError,
+                "Song file not found"
+            ):
+                load_song(filename)
+
 if __name__ == "__main__":
     unittest.main()
